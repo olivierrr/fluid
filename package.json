@@ -1,0 +1,27 @@
+{
+  "name": "fluid",
+  "version": "1.0.0",
+  "description": "fluid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "beefy index:bundle.js --live"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olivierrr/fluid.git"
+  },
+  "keywords": [
+    "webgl",
+    "fluid"
+  ],
+  "author": "olivierrr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/olivierrr/fluid/issues"
+  },
+  "homepage": "https://github.com/olivierrr/fluid",
+  "devDependencies": {
+    "beefy": "^2.1.1"
+  }
+}
