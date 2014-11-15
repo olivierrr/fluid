@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "beefy index:bundle.js --live"
+    "dev": "beefy index:bundle.js --live "
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
   "homepage": "https://github.com/olivierrr/fluid",
   "devDependencies": {
     "beefy": "^2.1.1"
+  },
+  "dependencies": {
+    "webgl-utils": "^1.0.0"
   }
 }
