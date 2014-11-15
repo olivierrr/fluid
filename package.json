@@ -25,6 +25,7 @@
     "beefy": "^2.1.1"
   },
   "dependencies": {
+    "gl-mat4": "^1.0.0",
     "webgl-utils": "^1.0.0"
   }
 }

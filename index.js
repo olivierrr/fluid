@@ -1,7 +1,11 @@
 
 var gl_utils = require('webgl-utils')
+  , mat4 = require('gl-mat4')
 
 var gl
+
+var W = window.innerWidth
+  , H = window.innerHeight
 
 /**
  *
@@ -14,6 +18,8 @@ function initGL (canvas) {
   ].join('')
 
   var vs = [
+    'uniform mat4 uMVMatrix;',
+    'uniform mat4 uPMatrix;',
     'void main(void) {',
     '}'
   ].join('')
@@ -25,13 +31,30 @@ function initGL (canvas) {
     return
   }
 
-  var W = canvas.width = window.innerWidth
-  var H = canvas.height = window.innerHeight
-
+  gl.width = canvas.width = W
+  gl.height = canvas.height = H
   gl.viewport(0, 0, W, H)
-  gl.width = W
-  gl.height = H
-  gl.clearColor(0.0, 0.0, 0.0, 1.0)
+  gl.clearColor(0.1, 0.3, 0.7, 1.0)
+
+  // perspective uniform
+  gl.program.pMatrixUniform = gl.getUniformLocation(gl.program, "uPMatrix")
+  var pMatrix = mat4.create()
+  mat4.perspective(pMatrix, 45.0, W/H, 0.1, 90.0)
+
+  // model uniform
+  gl.program.mvMatrixUniform = gl.getUniformLocation(gl.program, "uMVMatrix")
+  var mvMatrix = mat4.create()
+
+  ;(function update() {
+
+    gl.uniformMatrix4fv(gl.program.pMatrixUniform, false, pMatrix)
+    gl.uniformMatrix4fv(gl.program.mvMatrixUniform, false, mvMatrix)
+
+    gl.clear(gl.COLOR_BUFFER_BIT)
+    gl.flush()
+
+    window.requestAnimationFrame(update)
+  })()
 
 }
 
@@ -51,3 +74,4 @@ function appendCanvas () {
 }
 
 initGL(appendCanvas())
+
