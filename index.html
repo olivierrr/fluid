@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>fluid</title>
+</head>
+<body>
+  <script id="shader-fs" type="x-shader/x-fragment">
+    precision lowp float;
+
+    uniform sampler2D uPositionTex;
+    uniform float uSize;
+    uniform float uDim;
+
+    varying vec4 position;
+
+    // int(uDim) not working?
+    const int iDim = 64;
+    const float stickyness = 20.0;
+
+    void main(void) {
+      float value = 0.0;
+
+      float x, y;
+      for (int i = 0; i < iDim; ++i) {
+        vec4 tex = texture2D(uPositionTex, vec2(float(i) / uDim, 0));
+
+        // point 1
+        x = position.x - tex.r;
+        y = position.y - tex.g;
+        value += stickyness / (x * x + y * y);
+
+        // point 2
+        x = position.x - tex.b;
+        y = position.y - tex.a;
+        value += stickyness / (x * x + y * y);
+      }
+
+      float a = 0.0;
+      if (value > uSize) {
+        a = 0.86;
+      } else if(value > (uSize - 0.001)) {
+        a = 1.0;
+      } else {
+        return;
+      }
+
+      // float t = (position.y / 1000.0);
+      gl_FragColor = vec4(0.0, a, a, 1.0);
+    }
+  </script>
+
+  <script id="shader-vs" type="x-shader/x-vertex">
+    uniform vec2 uScreen;
+    attribute vec4 aPosition;
+    varying vec4 position;
+
+    void main(void) {
+      position = vec4(aPosition.xyz, 1.0);
+      gl_Position = position * 2.0 - vec4(1.0, 1.0, 1.0, 1.0);
+      position *= vec4(uScreen, 1.0, 1.0);
+    }
+  </script>
+
+  <script type="text/javascript" charset="utf-8" src="bundle.js"></script>
+</body>
+</html>
