@@ -4,7 +4,7 @@ var shell = require('gl-now')()
 
 var TEX_DIM = 64
   , POINTS_COUNT = TEX_DIM * 2
-  , POINT_SIZE = 0.02
+  , POINT_SIZE = 0.03
 
 var speed = 1
   , vertices
